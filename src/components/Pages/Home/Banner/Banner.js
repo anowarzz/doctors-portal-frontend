@@ -9,7 +9,7 @@ const Banner = () => {
   <div className="hero-content flex-col lg:flex-row-reverse">
     <img  alt='' src={chair} className=" rounded-lg md:w-4/5 lg:w-1/2 shadow-2xl" />
     <div>
-      <h1 className="text-5xl font-bold">Box Office News!</h1>
+      <h1 className="text-5xl font-bold">Your New Smile Starts Here</h1>
       <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
       <button className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white">Get Started</button>
     </div>
