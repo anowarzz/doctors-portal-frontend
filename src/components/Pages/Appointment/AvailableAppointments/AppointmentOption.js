@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AppointmentOption  = ({appointmentOption}) => {
+const AppointmentOption  = ({appointmentOption, setTreatment}) => {
 
 const {name, slots} = appointmentOption;
 
@@ -17,7 +17,10 @@ const {name, slots} = appointmentOption;
         </p>
 
           <div className="card-actions justify-center mt-4">
-            <button className="btn btn-primary text-white hover:bg-gradient-to-r hover:from-accent hover:to-info">Book Appointment</button>
+
+            <label htmlFor="booking-modal" className="btn btn-primary text-white hover:bg-gradient-to-r hover:from-accent hover:to-info"
+            onClick={() => setTreatment(appointmentOption)}>
+              Book Appointment</label>
           </div>
         </div>
       </div>
