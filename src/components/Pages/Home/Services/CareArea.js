@@ -1,5 +1,6 @@
 import React from 'react';
 import treatment from '../../../../assets/images/treatment.png'
+import PrimaryButton from '../../../../Utilities/PrimaryButton/PrimaryButton';
 
 const CareArea = () => {
     return (
@@ -13,7 +14,7 @@ const CareArea = () => {
       <h1 className="text-2xl md:text-5xl font-bold font-Ibm-plex">Exceptional Dental <br /> Care, on Your Terms</h1>
       <p className="py-6">Provident cupiditate voluptatem et in. Quaerat <br className='hidden md:block'/> fugiat ut assumenda excepturi exercitationem quasi. <br className='hidden md:block'/> In deleniti eaque aut repudiandae et a id nisi.</p>
 
-      <button className="btn btn-primary">Get Started</button>
+      <PrimaryButton>Get Started</PrimaryButton>
     </div>
   </div>
 </div>

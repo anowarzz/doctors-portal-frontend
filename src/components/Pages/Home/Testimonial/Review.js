@@ -4,7 +4,7 @@ const Review = ({ review }) => {
   const { name, img, review: userReview, location } = review;
 
   return (
-    <div className="shadow-xl">
+    <div className="shadow-xl rounded">
       <div className="card-body">
 
         <p className="font-Ibm-plex">{userReview}</p>

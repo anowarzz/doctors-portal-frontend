@@ -43,9 +43,6 @@ const services = [
                 services.map(service => <Service key={service.id} service={service}/> )
             }
           </div>
-          <div>
-            <CareArea />
-          </div>
         </div>
     );
 };
