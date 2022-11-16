@@ -10,7 +10,7 @@ const Review = ({ review }) => {
         <p className="font-Ibm-plex">{userReview}</p>
         <div className="flex gap-4 items-center mt-3 ">
         <div className="avatar">
-  <div className="w-16 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+  <div className="w-16 rounded-full ring ring-primary hover:ring-error ring-offset-base-100 ring-offset-2">
     <img src={img} alt="" />
   </div>
 </div>

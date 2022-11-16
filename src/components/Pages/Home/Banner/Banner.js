@@ -4,7 +4,7 @@ import chair from '../../../../assets/images/chair.png'
 import PrimaryButton from '../../../../Utilities/PrimaryButton/PrimaryButton';
 const Banner = () => {
     return (
-        <div className='py-10' style={{backgroundImage : `url(${bgImg})`}}>
+        <div className='py-16 bg-contain' style={{backgroundImage : `url(${bgImg})`}}>
 
            <div className="hero">
   <div className="hero-content flex-col lg:flex-row-reverse">
