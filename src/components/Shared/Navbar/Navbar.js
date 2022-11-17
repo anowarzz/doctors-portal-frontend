@@ -1,24 +1,43 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../contexts/AuthProvider";
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((err) => console.log(err));
+  };
+
   const menuItems = (
     <React.Fragment>
       <li className="">
-        <Link to = "/">Home</Link>
+        <Link to="/">Home</Link>
       </li>
       <li>
-        <Link to = "/appointment">Appointment</Link>
+        <Link to="/appointment">Appointment</Link>
       </li>
       <li>
-        <Link to = "/about">About</Link>
+        <Link to="/about">About</Link>
       </li>
-      <li>
-        <Link to = "/reviews">Reviews</Link>
-      </li>
-      <li>
-        <Link to = "/login">Login</Link>
-      </li>
+
+      {user?.uid ? (
+        <>
+          <li>
+            <Link to="/dashboard">Dashboard</Link>
+          </li>
+
+          <li>
+            <button onClick={handleLogOut}>SignOut</button>
+          </li>
+        </>
+      ) : (
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
+      )}
     </React.Fragment>
   );
 
@@ -46,17 +65,16 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
-           {menuItems}
+            {menuItems}
           </ul>
         </div>
-        <Link to="/" className="btn btn-ghost normal-case text-2xl md:text-3xl">Smile Clinic</Link>
+        <Link to="/" className="btn btn-ghost normal-case text-2xl md:text-3xl">
+          Smile Clinic
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal p-0">
-        {menuItems}
-        </ul>
+        <ul className="menu menu-horizontal p-0">{menuItems}</ul>
       </div>
-   
     </div>
   );
 };
