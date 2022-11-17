@@ -4,8 +4,8 @@ import Appointment from "../../components/Pages/Appointment/Appointment/Appointm
 import ErrorPage from "../../components/Pages/ErrorPage/ErrorPage";
 import Home from "../../components/Pages/Home/Home/Home";
 import Login from "../../components/Pages/Login/Login";
-import Register from "../../components/Pages/Register/Register";
 import Reviews from "../../components/Pages/Reviews/Reviews";
+import SignUp from "../../components/Pages/SignUp/SignUp";
 import Main from "../../layout/Main";
 
 const router = createBrowserRouter([
@@ -31,17 +31,18 @@ const router = createBrowserRouter([
             path: '/reviews',
             element: <Reviews />
         },
+        {
+            path: '/login',
+            element: <Login />
+        },
+        {
+            path: '/signup',
+            element: <SignUp />
+        },
     
     ],
 },
-{
-    path: '/login',
-    element: <Login />
-},
-{
-    path: '/register',
-    element: <Register />
-},
+
 ])
 
 export default router
