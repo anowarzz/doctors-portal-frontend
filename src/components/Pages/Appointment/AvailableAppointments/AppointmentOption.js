@@ -18,7 +18,7 @@ const {name, slots} = appointmentOption;
 
           <div className="card-actions justify-center mt-4">
 
-            <label htmlFor="booking-modal" className="btn btn-primary text-white hover:bg-gradient-to-r hover:from-accent hover:to-info"
+            <label disabled={slots.length === 0} htmlFor="booking-modal" className="btn btn-primary text-white hover:bg-gradient-to-r hover:from-accent hover:to-info"
             onClick={() => setTreatment(appointmentOption)}>
               Book Appointment</label>
           </div>
