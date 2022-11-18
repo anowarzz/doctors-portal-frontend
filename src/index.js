@@ -1,20 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import 'react-day-picker/dist/style.css';
-import AuthProvider from './contexts/AuthProvider';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import "react-day-picker/dist/style.css";
+import AuthProvider from "./contexts/AuthProvider";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import {QueryClient, QueryClientProvider,
+} from "@tanstack/react-query";
+
+
+const queryClient = new QueryClient();
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-   <AuthProvider>
-   <App />
-   <ToastContainer position="top-center"
-autoClose={2000} />
-   </AuthProvider>
+
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <App />
+        <ToastContainer position="top-center" autoClose={2000} />
+      </AuthProvider>
+    </QueryClientProvider>
+
   </React.StrictMode>
 );
 
