@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { format } from "date-fns";
+import { AuthContext } from "../../../../contexts/AuthProvider";
+import { toast } from "react-toastify";
 
-const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
+const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
   // treatment is just another name of appointment options with name, slots, _id ;
-  const { name, slots } = treatment;
+  const { name: treatmentName, slots } = treatment;
 
   const date = format(selectedDate, "PP");
-  
 
-const handleBooking = event => {
+  const { user } = useContext(AuthContext);
+
+  const handleBooking = (event) => {
     event.preventDefault();
 
     const form = event.target;
@@ -16,26 +19,40 @@ const handleBooking = event => {
     const slot = form.slot.value;
     const email = form.email.value;
     const phone = form.phone.value;
-
-
-
     const booking = {
-        appointmentDate: date,
-        treatment: treatment.name,
-        patient: name,
-        slot,
-        email,
-        phone,
-    }
+      appointmentDate: date,
+      treatment: treatmentName,
+      patient: name,
+      slot,
+      email,
+      phone,
+    };
 
-// ToDo : send data to the server 
-// and once data is saved then close the modal and display a toast
-console.log(booking);
-setTreatment(null)
+    // ToDo : send data to the server
+    // and once data is saved then close the modal
+    // and display a toast
 
-}
+    fetch("http://localhost:5000/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
 
-
+        if (data.acknowledged) {
+          setTreatment(null);
+          toast.success("Booking Confirmed");
+          refetch();
+        }
+        else{
+          toast.error(data.message)
+        }
+      });
+  };
 
   return (
     <>
@@ -48,7 +65,7 @@ setTreatment(null)
           >
             ✕
           </label>
-          <h3 className="text-lg font-bold text-center">{name}</h3>
+          <h3 className="text-lg font-bold text-center">{treatmentName}</h3>
           <form onSubmit={handleBooking} className="flex flex-col gap-4 mt-10">
             <input
               disabled
@@ -60,25 +77,33 @@ setTreatment(null)
 
             <select name="slot" className="select select-bordered w-full">
               {slots.map((slot, i) => (
-                <option value={slot}
-                key={i}>{slot}</option>
+                <option value={slot} key={i}>
+                  {slot}
+                </option>
               ))}
             </select>
 
             <input
-              type="text" name="name" 
+              defaultValue={user?.displayName}
+              disabled
+              type="text"
+              name="name"
               placeholder="Your Name"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full bg-gray-200"
             />
 
             <input
-              type="email" name="email" 
+              defaultValue={user?.email}
+              disabled
+              type="email"
+              name="email"
               placeholder="Email Address"
-              className="input input-bordered w-full"
+              className="bg-gray-200 input input-bordered w-full"
             />
 
             <input
-              type="text" name="phone" 
+              type="text"
+              name="phone"
               placeholder="Phone Number"
               className="input input-bordered w-full"
             />

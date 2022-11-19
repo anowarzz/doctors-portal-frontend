@@ -49,12 +49,13 @@ const from = location.state?.from?.pathname || '/';
 
 // Login user using google
 const handleGoogleLogIn = () => {
+  
   googleLogIn(googleProvider)
     .then((result) => {
       const user = result.user;
+      navigate(from, {replace: true});
       console.log(user);
       toast.success("Login Successful");
-      navigate(from, {replace: true});
     })
     .catch((err) => {
       console.log(err);

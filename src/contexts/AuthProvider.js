@@ -25,6 +25,7 @@ const signIn = (email, password) =>{
 
 // Google Login 
 const googleLogIn = (provider) => {
+    setLoading(true)
     return signInWithPopup(auth, provider)
 }
 
