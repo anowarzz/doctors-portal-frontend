@@ -4,12 +4,9 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../../contexts/AuthProvider";
+import useToken from "../../../hooks/useToken";
 
-
-
-const googleProvider =  new GoogleAuthProvider();
-
-
+const googleProvider = new GoogleAuthProvider();
 
 const Login = () => {
   const {
@@ -18,53 +15,54 @@ const Login = () => {
     handleSubmit,
   } = useForm();
 
-const {signIn, googleLogIn} = useContext(AuthContext);
+  const { signIn, googleLogIn } = useContext(AuthContext);
 
-const [loginError, setLoginError] = useState('')
+  const [loginError, setLoginError] = useState("");
+  const [loginUserEmail, setLoginUserEmail] = useState("");
+  const [token] = useToken(loginUserEmail);
 
-const location = useLocation();
-const navigate = useNavigate();
-const from = location.state?.from?.pathname || '/';
+  // location
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
 
-
+  if (token) {
+    navigate(from, { replace: true });
+  }
 
   // Login user using email and password
   const handleLogin = (data, e) => {
     console.log(data);
-    setLoginError('');
+    setLoginError("");
 
-    signIn(data.email,data.password)
-    .then(result => {
+    signIn(data.email, data.password)
+      .then((result) => {
         const user = result.user;
+        setLoginUserEmail(data.email);
         console.log(user);
-        toast.success('Login Successful')
+        toast.success("Login Successful");
         e.target.reset();
-        navigate(from, {replace: true});
-    })
-    .catch(err => {
+      })
+      .catch((err) => {
         console.log(err);
-        setLoginError(err.message)
-    })
+        setLoginError(err.message);
+      });
   };
 
-// Login user using google
-const handleGoogleLogIn = () => {
-  
-  googleLogIn(googleProvider)
-    .then((result) => {
-      const user = result.user;
-      navigate(from, {replace: true});
-      console.log(user);
-      toast.success("Login Successful");
-    })
-    .catch((err) => {
-      console.log(err);
-      setLoginError(err);
-    });
-};
-
-
-
+  // Login user using google
+  const handleGoogleLogIn = () => {
+    googleLogIn(googleProvider)
+      .then((result) => {
+        const user = result.user;
+        navigate(from, { replace: true });
+        console.log(user);
+        toast.success("Login Successful");
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoginError(err);
+      });
+  };
 
   return (
     <div className="h-[600px] flex flex-col justify-center items-center ">
@@ -112,9 +110,9 @@ const handleGoogleLogIn = () => {
               <span className="hover:link ">Forgot Password ?</span>
             </label>
           </div>
-              {
-                loginError && <p className="text-sm font-bold text-red-500 py-1">{loginError}</p>
-              }
+          {loginError && (
+            <p className="text-sm font-bold text-red-500 py-1">{loginError}</p>
+          )}
           <input
             className="btn btn-accent w-full mt-4 hover:btn-secondary"
             value="Login"
@@ -130,7 +128,8 @@ const handleGoogleLogIn = () => {
         </p>
         <div className="divider">OR</div>
 
-        <button onClick={handleGoogleLogIn} 
+        <button
+          onClick={handleGoogleLogIn}
           aria-label="Login with Google"
           type="button"
           className="flex items-center justify-center w-full p-2 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 border-gray-600 focus:ring-violet-600 hover:bg-accent hover:text-white"

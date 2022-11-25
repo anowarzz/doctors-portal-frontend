@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import { toast } from "react-toastify";
 import { GoogleAuthProvider } from "firebase/auth";
+import useToken from "../../../hooks/useToken";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -17,7 +18,18 @@ const SignUp = () => {
 
   const [signUpError, setSignUpError] = useState("");
 
+ const [createdUserEmail, setCreatedUserEmail] = useState('') 
+const [token] = useToken(createdUserEmail);
+
   const navigate = useNavigate();
+
+
+
+if(token){
+  navigate('/')
+}
+
+
 
   // Creating a new user using email and password
   const handleSignUp = (data, e) => {
@@ -70,23 +82,13 @@ const SignUp = () => {
       },
       body: JSON.stringify(user),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        getUserToken(email);
+      .then(res => res.json())
+      .then( data => {
+      setCreatedUserEmail(email)
       });
   };
 
-  const getUserToken = (email) => {
-    fetch(`http://localhost:5000/jwt?email=${email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.accessToken) {
-          localStorage.setItem("accessToken", data.accessToken);
-          navigate("/");
-        }
-      });
-  };
-
+ 
   return (
     <div className="h-[600px] flex flex-col justify-center items-center my-4 w-auto">
       <div className="max-w-96 md:w-auto px-16 py-4 border border-gray-200  shadow-slate-500 shadow-sm">
