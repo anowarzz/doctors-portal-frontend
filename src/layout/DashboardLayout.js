@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import DashBoardNavbar from '../components/Shared/DashBoardNavbar/DashBoardNavbar';
-import Navbar from '../components/Shared/Navbar/Navbar';
+import { AuthContext } from '../contexts/AuthProvider';
+import useAdmin from '../hooks/useAdmin';
 
 const DashboardLayout = () => {
-    return (
+    
+  const {user} = useContext(AuthContext);
+  const [isAdmin] = useAdmin(user?.email)
+  
+  console.log(isAdmin);
+  
+  
+  
+  return (
         <div>
           <DashBoardNavbar />
             <div className="drawer drawer-mobile">
@@ -21,7 +30,13 @@ const DashboardLayout = () => {
 
       <li className='font-semibold shadow border'><Link to = '/dashboard'>My Appointments</Link></li>
 
-      <li className='font-semibold shadow border'><Link to = '/dashboard/allUsers'>All Users</Link></li>
+  { isAdmin &&
+   <> 
+     <li className='font-semibold shadow border'><Link to = '/dashboard/allUsers'>All Users</Link></li>
+
+     <li className='font-semibold shadow border'><Link to = '/dashboard/addDoctor'>Add A  Doctor</Link></li>
+    </>
+  } 
 
     </ul>
   
