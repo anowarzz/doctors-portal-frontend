@@ -35,6 +35,9 @@ const DashboardLayout = () => {
      <li className='font-semibold shadow border'><Link to = '/dashboard/allUsers'>All Users</Link></li>
 
      <li className='font-semibold shadow border'><Link to = '/dashboard/addDoctor'>Add A  Doctor</Link></li>
+
+     <li className='font-semibold shadow border'><Link to = '/dashboard/manageDoctors'>Manage Doctors</Link></li>
+
     </>
   } 
 
