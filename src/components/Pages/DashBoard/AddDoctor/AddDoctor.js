@@ -12,25 +12,41 @@ const {data: specialties, isLoading} = useQuery({
     const res = await fetch('http://localhost:5000/appointmentSpecialty');
     const data = await res.json();
     return data
-    }
-
-    
-
+    } 
 })
 
 
+  const {register,handleSubmit,formState: { errors },} = useForm();
+
+const imageHostKey = process.env.REACT_APP_imgbb_key
 
 
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
 
   const handleAddDoctor = (data) => {
     console.log(data);
+    const image = data.img[0]
+    const formData = new FormData();
+    formData.append('image', image)
+
+    const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`
+
+    fetch(url, {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(imgData => {
+        console.log(imgData);
+        if(imgData.success){
+           console.log(imgData.data.url);
+           
+        }
+        
+    })
+
   };
+
+
 
 if(isLoading){
     return <Loading />
@@ -38,7 +54,7 @@ if(isLoading){
 
   return (
     <div className="w-96 p-8 mx-auto">
-      <h2 className="text-4x mb-8">Add A Doctor</h2>
+      <h2 className="text-4xl mb-8">Add A Doctor</h2>
 
       <form onSubmit={handleSubmit(handleAddDoctor)}>
         <div className="form-control w-full max-w-xs">
